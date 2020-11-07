@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+<h1>游菲是我老婆！！！</h1>
+<button id="btn">点击获取用户数据</button>
+<div id="container"></div>
+<script>
+    btn = document.getElementById('btn')
+    btn.onclick = function() {
+        fetch('/data', {
+            method: 'GET'
+        }).then(response => {
+            document.getElementById('container').innerHTML = response.text().toString()
+        })
+    }
+</script>
+</body>
+</html>

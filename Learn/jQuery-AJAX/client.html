@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>jQuery发送AJAX请求</title>
+</head>
+<body>
+<div class="container">
+    <h2 class="card-header">jQuery发送AJAX请求</h2>
+    <button class="btn btn-primary">GET</button>
+    <button class="btn btn-danger">POST</button>
+    <button class="btn btn-info">通用型方法ajax</button>
+</div>
+<script>
+
+    // 第一个参数为url
+    // 第二个参数为自带的参数
+    // 第三个参数为回调函数，data为xhr.response
+    // 第四个参数为response响应体的格式
+
+    $('button').eq(0).click(function(){
+        $.get( 'http://localhost:8000/jquery-server', {a:100, b:200}, data => {
+            console.log( data)
+        },'json')
+    })
+
+    $('button').eq(1).click(function(){
+        $.post( 'http://localhost:8000/jquery-server', {a:100, b:200}, data => {
+            console.log(data)
+        })
+    })
+
+    //通用ajax方法
+    $('button').eq(2).click(function(){
+        // 接收一个对象
+        $.ajax({
+            url: 'http://localhost:8000/timeout',
+            data:  {a:100, b:200},
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                console.log(data)
+            },
+            error: function (data) {
+                console.log(data)
+            },
+            timeout: 2000,
+        })
+    })
+</script>
+</body>
+</html>

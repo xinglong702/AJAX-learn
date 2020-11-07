@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>原理展示</title>
+    <style>
+        #result {
+            width: 200px;
+            height: 200px;
+            border: 3px solid forestgreen;
+        }
+    </style>
+</head>
+<body>
+<div id="result"></div>
+
+<script>
+    function handle(data) {
+        const result = document.getElementById('result')
+        result.innerHTML = data.name
+    }
+</script>
+
+//使用script实现跨域！！！（服务器返回的必须是js格式代码）
+<script src="http://localhost:8000/jsonp-server"></script>
+</body>
+</html>

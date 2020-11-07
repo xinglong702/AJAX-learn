@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>IE缓存问题</title>
+    <title>重复请求问题</title>
     <style>
         #result {
             width: 200px;
@@ -12,21 +12,28 @@
     </style>
 </head>
 <body>
+<h1>解决用户在短时间内发送大量的重复请求问题</h1>
 <button id="btn">点击发送请求</button>
 <div id="result"></div>
 <script>
     const btn = document.getElementById('btn')
     const result =  document.getElementById('result')
 
+    let isSending = false // 是否正在发送AJAX请求
+    let xhr = null
+
     btn.addEventListener('click', event => {
-        const xhr = new XMLHttpRequest()
-        xhr.open('GET', 'http://localhost:8000/ie')
+        // 判断标识变量isSending的值，如果为true，说明上一次的请求还未完成,则取消此次请求
+        if (isSending) {
+            return false
+        }
+        xhr = new XMLHttpRequest()
+        isSending = true
+        xhr.open('GET', 'http://localhost:8000/repeat')
         xhr.send()
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    result.innerHTML = xhr.response
-                }
+                    isSending = false
             }
         }
     });

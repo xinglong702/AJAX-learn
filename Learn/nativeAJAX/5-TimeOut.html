@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TimeOut</title>
+    <style>
+        #result {
+            width: 200px;
+            height: 100px;
+            border: 3px solid red;
+        }
+    </style>
+</head>
+<body>
+<button id="btn">点击发送请求</button>
+<div id="result"></div>
+<script>
+    const btn = document.getElementById('btn')
+    const result =  document.getElementById('result')
+
+    btn.addEventListener('click', event => {
+        const xhr = new XMLHttpRequest()
+
+        // 增加一个超时2s设置
+        xhr.timeout = 2000
+        // 超时回调
+        xhr.ontimeout = function() {
+            result.innerHTML = '请求超时，请稍后重试！'
+        }
+        // 网络异常回调
+        // 在chrome浏览器的network里可以设置断网
+        xhr.onerror = function() {
+            result.innerHTML = '网络异常，请稍后重试！'
+        }
+
+        xhr.open('GET', 'http://localhost:8000/timeout')
+        xhr.send()
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    result.innerHTML = xhr.response
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>

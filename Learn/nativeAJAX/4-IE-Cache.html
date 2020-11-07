@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IE缓存问题</title>
+    <style>
+        #result {
+            width: 200px;
+            height: 100px;
+            border: 3px solid red;
+        }
+    </style>
+</head>
+<body>
+<button id="btn">点击发送请求</button>
+<div id="result"></div>
+<script>
+    const btn = document.getElementById('btn')
+    const result =  document.getElementById('result')
+
+    // Ajax iE缓存解决办法：在请求后面加一个Date.now().toString(),就表示不是同一个请求
+    // 实际工作中，有专门的工具会处理这个问题
+
+    btn.addEventListener('click', event => {
+        const xhr = new XMLHttpRequest()
+        xhr.open('GET', 'http://localhost:8000/ie'+Date.now().toString())
+        xhr.send()
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    result.innerHTML = xhr.response
+                }
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

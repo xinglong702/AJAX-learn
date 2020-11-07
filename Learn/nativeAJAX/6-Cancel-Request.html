@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>手动取消请求</title>
+    <style>
+        #result {
+            width: 200px;
+            height: 100px;
+            border: 3px solid red;
+        }
+    </style>
+</head>
+<body>
+<button id="btn">点击发送请求</button>
+<button id="btn2">点击取消请求</button>
+<script>
+    const btn = document.getElementById('btn')
+    const btn2 = document.getElementById('btn2')
+
+    //设置全局变量，可以在两个函数里调用同一个xhr
+    let xhr = null
+
+    btn.addEventListener('click', event => {
+        xhr = new XMLHttpRequest()
+        xhr.open('GET', 'http://localhost:8000/cancel')
+        xhr.send()
+    });
+
+    btn2.addEventListener('click', event => {
+        // abort()取消请求
+        xhr.abort()
+    });
+
+</script>
+</body>
+</html>
