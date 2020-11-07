@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSON</title>
+</head>
+<body>
+<div id="result"></div>
+<script>
+    window.onkeydown = function () {
+        const xhr = new XMLHttpRequest()
+        xhr.responseType ="json"
+        xhr.open('GET', 'http://127.0.0.1:8000/json-serve')
+        xhr.send()
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    document.getElementById('result').innerHTML = xhr.response
+                }
+            }
+        }
+    }
+</script>
+</body>
+</html>
